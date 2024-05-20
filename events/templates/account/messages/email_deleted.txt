@@ -1,0 +1,2 @@
+﻿{% load i18n %}
+{% blocktrans %}Usunięto adres e-mail: {{email}}.{% endblocktrans %}

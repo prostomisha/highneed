@@ -1,0 +1,14 @@
+{% load staticfiles %}
+<html lang="en">
+    <head><title>Hello World</title></head>
+    <body>
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
+
+        {% block scripts %}
+        <script src="{% static 'navbar.js' %}"></script>
+        {% endblock %}
+
+    </body>
+</html>

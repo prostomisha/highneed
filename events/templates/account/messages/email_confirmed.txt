@@ -1,0 +1,2 @@
+﻿{% load i18n %}
+{% blocktrans %}Potwierdzono adres email: {{email}}.{% endblocktrans %}

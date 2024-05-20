@@ -1,0 +1,53 @@
+.bottom-bar {
+    background-color: #64BE7B;
+    color: white;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5% 1%;
+}
+
+.contact-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.contact {
+    color: white;
+}
+
+.contact:hover {
+    color: #347945;
+}
+
+.contact-text {
+    height: 22px;
+    font-size: 16px;
+    text-decoration: underline;
+    padding-left: 1%;
+    padding-right: 1%;
+}
+
+h2 {
+    font-size: 20px;
+    padding-bottom: 0.5%;
+}
+
+
+
+@media screen and (max-width: 416px) {
+    h2 {
+        font-size: 16px;
+    }
+
+    .contact-text {
+        font-size: 13px;
+    }
+
+    .contact-icon {
+        scale: 90%;
+    }
+}

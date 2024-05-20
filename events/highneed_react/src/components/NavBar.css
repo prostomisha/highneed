@@ -1,0 +1,149 @@
+.navbar {
+}
+
+.navbar-container {
+    padding: 1% 1%;
+    background-color: #64BE7B;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.line {
+    height: 5px;
+    width: 100%;
+    background-color: #347945;
+}
+
+.logo {
+    display: flex;
+    position:absolute;
+    left:50%;
+    right:50%;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+}
+
+.logo-h1 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.logo-h2 {
+    font-weight:normal;
+    font-size: 13px;
+}
+
+
+.icons {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+
+.icon-container {
+    display: flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.menu-icon-list {
+    width: 24px;
+    height: 24px;
+}
+
+.menu-icon-cross {
+    position: relative;
+    width: 30px;
+    height: 30px;
+}
+
+
+.icon-list, .icon-cross {
+    position: absolute;
+}
+
+.sidebar.disable {
+    display: none;
+}
+
+.menu-icon-cross .icon-cross {
+    visibility: hidden;
+}
+
+.menu-icon-list .icon-list {
+    visibility: hidden;
+}
+
+a {
+    text-decoration: none;
+}
+
+.nav-links {
+    color: black;
+    text-decoration: none;
+}
+
+ul {
+    padding: 1% 1%;
+    display: flex;
+    flex-direction: column;
+}
+
+li:hover {
+    border-radius: 40px;
+    background-color: #F0FAF3;
+}
+
+li {
+    display: flex;
+    flex-direction:row;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.sidebar {
+    width: 100%;
+    border-bottom: #347945 2px solid;
+    position: absolute;
+    background-color: white;
+}
+
+.sidebar-icon {
+    padding: 0.5%;
+    display:flex;
+    align-items: center;
+
+}
+
+.sidebar-text {
+    display: flex;
+    align-items: center;
+    padding: 0.5%;
+}
+
+
+
+@media screen and (max-width: 416px) {
+    .logo-h1 {
+        font-size: 16px;
+    }
+
+    .logo-h2{
+        font-size:12px;
+    }
+}
+
+@media screen and (min-width: 801px) {
+    .logo-h1 {
+        font-size: 20px;
+    }
+
+    .logo-h2 {
+        font-size: 14px;
+    }
+
+}

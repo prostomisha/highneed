@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+    <style>
+        #map {
+            height: 450px;
+            width: 600px;
+        }
+    </style>
+    <title>HighNeed.pl</title>
+</head>
+
+<body>
+
+    <!--Navbar-->
+    <div class="navbar">
+        <div class="container nav-panel">
+            <h1 class="logo">HighNeed.pl Poznań</h1>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'events:index' %}">Strona główna</a></li>
+                    <li><a href="{% url 'events' %}">Wyszukaj wydarzenia</a></li>
+                    <li><a href="{% url 'calendar' %}">Kalendarz</a></li>
+
+                    <li><a href="{% url 'fanpage' %}">Fanpage</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'profil' %}">{{ user.username }}</a></li>
+                    <li><a href="{% url 'koszyk' %}">Koszyk</a></li>
+                    <li><a href="{% url 'account_logout' %}">Wyloguj się</a></li>
+                    {% else %}
+                    <li><a href="{% url 'account_login' %}">Koszyk</a></li>
+                    <li><a href="{% url 'account_login' %}">Zaloguj się</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <!--Button-list-->
+    <section class="categories">
+
+        <div class="container">
+            {% for i in categories %}
+            <a class="btn btn-list" href="all_events/category/{{ i.id }}/">{{ i.name }}</a>
+            {% endfor %}
+
+        </div>
+    </section>
+
+    <!--Article1-->
+    <section class="showcase article1">
+        <div class="container grid">
+            <img class="art1-img" src="../images/img-article.jpg" alt="" />
+            <div class="showcase-text">
+                <h1>Witamy na stronie HighNeed</h1>
+                <p>HighNeed.pl jest portalem do planowania aktywności dla rodzin z dziećmi w Poznaniu. Tu znajdziesz wydarzenia odpowiadające zainteresowaniom dzieci odbywające się w Poznaniu.</p>
+            </div>
+        </div>
+        <div class="divider-bottom">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!--Article2-->
+    <section class="showcase article2">
+        <div class="container grid">
+            <div class="showcase-text">
+                <h1>Wyszukiwanie wydarzeń w twojej okolicy</h1>
+                <p> Znajdź grupy i wydarzenia na terenie Poznania, dzięki którym Twoje dziecko rozwinie swoje zainteresowanie oraz zawrze nowe znajomości.</p>
+               
+                <a href="{% url 'events' %}" class="btn">
+                    <div class="icon-text">
+                        <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M16.9325 15.7562C18.969 13.1408 18.785 9.35694 16.3807 6.95262C13.7772 4.34913 9.55612 4.34913 6.95262 6.95262C4.34913 9.55612 4.34913 13.7772 6.95262 16.3807C9.35694 18.785 13.1408 18.969 15.7562 16.9325C15.7675 16.9453 15.7793 16.9578 15.7915 16.97L19.327 20.5055C19.6524 20.8309 20.1801 20.8309 20.5055 20.5055C20.8309 20.1801 20.8309 19.6524 20.5055 19.327L16.97 15.7915C16.9578 15.7793 16.9453 15.7675 16.9325 15.7562ZM15.2022 8.13113C17.1548 10.0838 17.1548 13.2496 15.2022 15.2022C13.2496 17.1548 10.0838 17.1548 8.13113 15.2022C6.17851 13.2496 6.17851 10.0838 8.13113 8.13113C10.0838 6.17851 13.2496 6.17851 15.2022 8.13113Z" fill="white" />
+                        </svg>
+                        <p>Wyszukaj wydarzenia</p>
+                    </div>
+                </a>
+            </div>
+            <img class="art2-img" src="../images/img-article2.jpg" alt="" />
+        </div>
+
+
+    </section>
+
+    <!--Google Map-->
+    <section class="showcase maps">
+        <div class="container grid">
+            <div class="map-responsive">
+                <div id="map" class="black"></div>
+                <script>
+                    function initMap() {
+  // The location of Uluru
+                        //const address = "Moscow";
+
+                    const uluru = { lat: 52.406376, lng: 16.925167 };
+                    //geocoder = new google.maps.Geocoder();
+
+  // The map, centered at Uluru
+                    const map = new google.maps.Map(document.getElementById("map"), {
+                    zoom: 12,
+                    center: uluru,
+                    });
+  // The marker, positioned at Uluru
+                    const marker = new google.maps.Marker({
+                    position: uluru,
+                    map: map,
+                    });
+                    const infoWindow = new google.maps.InfoWindow({
+                        content:'<h3 style="color:black;">Wszystkie wydarzenia: {{ numofnews }}</h3>'
+                    });
+                    marker.addListener('click', function (){
+                        infoWindow.open(map, marker)
+                    });
+                    // We should pay to get access to this functionality
+
+                    /*geocoder.geocode( { 'address': address}, function(results, status) {
+                    if (status == 'OK') {
+                    map.setCenter(results[0].geometry.location);
+                    const marker2 = new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location
+                    });
+                    } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                        }
+    });*/
+
+}
+
+
+                </script>
+
+                <script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEzDF5vX5HDuwBEoBm1UG-oRP8yCXN1oo&callback=initMap&libraries=&v=weekly"
+      async
+>
+                </script>
+
+                <!--iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d155797.26090085393!2d16.761583054596013!3d52.40065525305756!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470444d2ece10ab7%3A0xa4ea31980334bfd1!2zUG96bmHFhA!5e0!3m2!1spl!2spl!4v1640198590651!5m2!1spl!2spl" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe-->
+            </div>
+            <div class="showcase-text">
+                <h1>Interaktywna mapa</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tristique porta risus, ac condimentum ex. Ut interdum dui ac dui pretium efficitur. Sed tempor, leo quis blandit sagittis, augue nulla malesuada urna, quis cursus ligula ante at urna. Etiam ligula est, bibendum at urna quis, pellentesque semper eros</p>
+
+
+            </div>
+        </div>
+    </section>
+
+
+
+    <!--Nadchodzace wydarzenia-->
+    <section class="showcase inc-events">
+        <div class="container">
+            <div class="showcase-text">
+                <h1>Nadchodzące wydarzenia</h1>
+            </div>
+            <div class="flex">
+
+
+                {% for i in nadch %}
+                <a href="all_events/{{i.id}}">
+                    <div class="card">
+                        <img class="art3-img" src="../images/test1.jpg" alt="" />
+                        <h3> {{ i.title }}</h3>
+                        <p>Data: {{ i.data }}</p>
+                    </div>
+                </a>
+                {% endfor %}
+
+            </div>
+        </div>
+    </section>
+
+    <!--Footer-->
+    <div class="footer">
+        <div class="container">
+            <h2>Kontakt</h2>
+
+            <div class="icon-text">
+                <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="2.19995" y="2.26282" width="17.6" height="13.5771" fill="white" />
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M0.011941 1.22869C0.011941 0.550109 0.559142 0 1.23416 0H20.7778C21.4528 0 22 0.550109 22 1.22869V15.1426C22 16.4998 20.9056 17.6 19.5556 17.6H2.44444C1.09441 17.6 0 16.4998 0 15.1426V1.62705C0 1.56854 0.0040699 1.51099 0.011941 1.45466V1.22869ZM2.44444 3.961V15.1426H19.5556V3.96142L13.5929 9.95559C12.161 11.3951 9.83938 11.3951 8.40748 9.95559L2.44444 3.961ZM4.36617 2.41763H17.6342L11.8645 8.21798C11.3872 8.69778 10.6133 8.69778 10.136 8.21798L4.36617 2.41763Z" fill="#FF0000" />
+                </svg>
+                <p>testowymail@mail.com</p>
+            </div>
+
+            <div class="icon-text">
+                <svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22 11.3492C22 5.08071 17.0756 0 11 0C4.92438 0 0 5.08071 0 11.3492C0 17.0145 4.02027 21.7096 9.28219 22.5616V14.6327H6.49151V11.3492H9.28219V8.84927C9.28219 6.00731 10.9216 4.43396 13.4351 4.43396C14.6405 4.43396 15.9003 4.65784 15.9003 4.65784V7.45005H14.514C13.1458 7.45005 12.7238 8.3269 12.7238 9.2224V11.3492H15.7737L15.2855 14.6327H12.7238V22.5616C17.9797 21.7096 22 17.0145 22 11.3492Z" fill="#1877F2" />
+                    <path d="M15.2794 14.6327L15.7677 11.3492H12.7178V9.22239C12.7178 8.32689 13.1457 7.45005 14.5079 7.45005H15.8942V4.65783C15.8942 4.65783 14.6345 4.43396 13.429 4.43396C10.9156 4.43396 9.27616 6.0073 9.27616 8.84927V11.3492H6.48547V14.6327H9.27616V22.5616C9.83671 22.6549 10.4093 22.6984 10.994 22.6984C11.5786 22.6984 12.1512 22.6487 12.7118 22.5616V14.6327H15.2794Z" fill="white" />
+                </svg>
+                <p2>Facebook fanpage</p2>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

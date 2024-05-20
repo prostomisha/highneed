@@ -1,0 +1,4 @@
+﻿{% load account %}
+{% load i18n %}
+{% user_display user as name %}
+{% blocktrans %}Zalogowany jako {{name}}.{% endblocktrans %}

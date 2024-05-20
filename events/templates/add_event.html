@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Stwórz wydarzenie</title>
+    {% load static %}
+    <!--
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+    {% load account %}
+    <!--Navbar-->
+    <div class="navbar">
+        <div class="container nav-panel">
+            <h1 class="logo">HighNeed.pl Poznań</h1>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'events:index' %}">Strona główna</a></li>
+                    <li><a href="{% url 'events' %}">Wyszukaj wydarzenia</a></li>
+                    <li><a href="{% url 'calendar' %}">Kalendarz</a></li>
+
+                    <li><a href="{% url 'fanpage' %}">Fanpage</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'profil' %}">{{ user.username }}</a></li>
+                    <li><a href="{% url 'koszyk' %}">Koszyk</a></li>
+                    <li><a href="{% url 'account_logout' %}">Wyloguj się</a></li>
+                    {% else %}
+                    <li><a href="{% url 'account_login' %}">Koszyk</a></li>
+                    <li><a href="{% url 'account_login' %}">Zaloguj się</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+
+    <div class="container grid-2">
+        <div class="col1">
+            <a href="{% url 'events' %}" class="btn btn-list-2">Zobacz wydarzenia</a>
+            <a href="add_event/" class="btn btn-list-2">Utwórz wydarzenie</a>
+            {% if user.username == "admin" %}
+            <a href="../add_category/" class="btn btn-list-2">Utwórz kategorię</a>
+            {% endif %}
+        </div>
+
+
+        <div class="col2">
+            <div class="grid article3">
+                <div class="showcase-text">
+
+                    <h1>Utwórz wydarzenie</h1>
+                    <form method="POST" class="post_form">
+                        {% csrf_token %}
+                        {{ form }}
+                        <button type="submit" class="btn btn-list-2">Dodaj wydarzenie</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--Powrot na strone glowna-->
+    <div class="return-panel">
+        <div class="container">
+            <h1><a href="../">Powrót</a></h1>
+        </div>
+    </div>
+
+
+</body>
+</html>
